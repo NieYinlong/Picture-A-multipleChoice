@@ -1,8 +1,5 @@
 //
 //  PictureViewController.h
-//  类似QQ图片添加、图片浏览
-//
-//  Created by seven on 16/4/1.
 //  Copyright © 2016年 QQpicture. All rights reserved.
 //
 
@@ -10,7 +7,7 @@
 
 
 
-@protocol PictureViewControllerDelegate <NSObject>
+@protocol PictureViewDelegate <NSObject>
 
 // 代理方法
 @optional
@@ -24,7 +21,7 @@
 
 @end
 
-@interface PictureViewController : UIView
+@interface PictureView : UIView
 
 
 
@@ -32,7 +29,7 @@
 @property(nonatomic,strong)UICollectionView *pictureCollectonView;
 
 // nyl
-@property (nonatomic, assign) id<PictureViewControllerDelegate>delegate;
+@property (nonatomic, assign) id<PictureViewDelegate>delegate;
 
 
 /**

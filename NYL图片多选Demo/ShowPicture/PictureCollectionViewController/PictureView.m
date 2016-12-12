@@ -1,12 +1,9 @@
 //
 //  ViewController.m
-//  类似QQ图片添加、图片浏览
-//
-//  Created by seven on 16/3/30.
 //  Copyright © 2016年 QQpicture. All rights reserved.
 //
 
-#import "PictureViewController.h"
+#import "PictureView.h"
 #import "MJPhotoBrowser.h"
 #import "MJPhoto.h"
 #import "PictureCollectionViewCell.h"
@@ -14,10 +11,11 @@
 #import "ELCImagePickerController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <AssetsLibrary/ALAsset.h>
+
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
-@interface PictureViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,MJPhotoBrowserDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UICollectionViewDelegateFlowLayout,ELCImagePickerControllerDelegate>
+@interface PictureView ()<UICollectionViewDataSource,UICollectionViewDelegate,MJPhotoBrowserDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UICollectionViewDelegateFlowLayout,ELCImagePickerControllerDelegate>
 
 
 
@@ -30,8 +28,7 @@
 
 @end
 
-@implementation PictureViewController
-
+@implementation PictureView
 
 
 - (instancetype)initWithFrame:(CGRect)frame imageArray:(NSMutableArray *)imageArray superVC:(id)superVC {
@@ -51,26 +48,33 @@
 - (void)adjustFrameWithImageArray:(NSMutableArray*)imageArray {
     self.itemsSectionPictureArray = imageArray;
     
-    CGFloat height = 0;
-    if (self.itemsSectionPictureArray.count<3) {
-        height= kScreenWidth/3;
-    } else if (self.itemsSectionPictureArray.count == 3) {
-        height = kScreenWidth/3 *2;
-        
-    } else if (self.itemsSectionPictureArray.count <6) {
-        height= kScreenWidth/3*2;
-    } else if (self.itemsSectionPictureArray.count == 6) {
-        height = kScreenWidth/3*3;
-    }
-    else if (self.itemsSectionPictureArray.count <=9) {
-        height= kScreenWidth/3*3;
-    } else {
-        height= kScreenWidth/3*3;
-    }
+//    CGFloat height = 0;
+//    if (self.itemsSectionPictureArray.count<3) {
+//        height= kScreenWidth/3;
+//    } else if (self.itemsSectionPictureArray.count == 3) {
+//        height = kScreenWidth/3 *2;
+//        
+//    } else if (self.itemsSectionPictureArray.count <6) {
+//        height= kScreenWidth/3*2;
+//    } else if (self.itemsSectionPictureArray.count == 6) {
+//        height = kScreenWidth/3*3;
+//    }
+//    else if (self.itemsSectionPictureArray.count <=9) {
+//        height= kScreenWidth/3*3;
+//    } else {
+//        height= kScreenWidth/3*3;
+//    }
 
+    CGFloat height = 0;
+    //2016-10-11
+    if (self.itemsSectionPictureArray.count % 3 == 0) {
+        height = (ceilf(self.itemsSectionPictureArray.count/3)+1) * (kScreenWidth/3);
+    }else{
+        height = (ceilf(self.itemsSectionPictureArray.count/3)+1) * ((kScreenWidth/3));
+    }
+    
     self.pictureCollectonView.frame = CGRectMake(0, 0, self.frame.size.width, height);
     
-    //[self.pictureCollectonView reloadData];
     
 }
 
@@ -83,6 +87,7 @@
         self.itemsSectionPictureArray = [[NSMutableArray alloc] init];
     }
 
+    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
 //    layout.itemSize = CGSizeMake(75, 75);
 //    layout.minimumInteritemSpacing = 0;
@@ -107,22 +112,12 @@
 //    } else {
 //        height= kScreenWidth/3*3;
 //    }
-    
     CGFloat height = 0;
-    if (self.itemsSectionPictureArray.count<3) {
-        height= kScreenWidth/3;
-    } else if (self.itemsSectionPictureArray.count == 3) {
-        height = kScreenWidth/3 *2;
-        
-    } else if (self.itemsSectionPictureArray.count <6) {
-        height= kScreenWidth/3*2;
-    } else if (self.itemsSectionPictureArray.count == 6) {
-        height = kScreenWidth/3*3;
-    }
-    else if (self.itemsSectionPictureArray.count <=9) {
-        height= kScreenWidth/3*3;
-    } else {
-        height= kScreenWidth/3*3;
+    //2016-10-11
+    if (self.itemsSectionPictureArray.count % 3 == 0) {
+        height = (ceilf(self.itemsSectionPictureArray.count/3)+1) * (kScreenWidth/3);
+    }else{
+        height = (ceilf(self.itemsSectionPictureArray.count/3)+1) * ((kScreenWidth/3));
     }
     
     //创建 UICollectionView
@@ -253,20 +248,11 @@
 //    }
     
     CGFloat height = 0;
-    if (self.itemsSectionPictureArray.count<3) {
-        height= kScreenWidth/3;
-    } else if (self.itemsSectionPictureArray.count == 3) {
-        height = kScreenWidth/3 *2;
-        
-    } else if (self.itemsSectionPictureArray.count <6) {
-        height= kScreenWidth/3*2;
-    } else if (self.itemsSectionPictureArray.count == 6) {
-        height = kScreenWidth/3*3;
-    }
-    else if (self.itemsSectionPictureArray.count <=9) {
-        height= kScreenWidth/3*3;
-    } else {
-        height= kScreenWidth/3*3;
+    //2016-10-11
+    if (self.itemsSectionPictureArray.count % 3 == 0) {
+        height = (ceilf(self.itemsSectionPictureArray.count/3)+1) * (kScreenWidth/3);
+    }else{
+        height = (ceilf(self.itemsSectionPictureArray.count/3)+1) * ((kScreenWidth/3));
     }
     
      self.pictureCollectonView.frame = CGRectMake(0, 0, self.frame.size.width, height);
@@ -332,7 +318,7 @@
 #pragma mark - 选取图片后的代理回调
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
-    __weak PictureViewController *wself = self;
+    __weak PictureView *wself = self;
     [_superVC dismissViewControllerAnimated:YES completion:^{
         BOOL hasVideo = NO;
         
@@ -409,8 +395,10 @@
             
             [wself layoutIfNeeded];
         } completion:^(BOOL finished) {
+            
             // 添加新选择的图片
             [wself.pictureCollectonView performBatchUpdates:^{
+                
                 [wself.pictureCollectonView insertItemsAtIndexPaths:indexPathes];
             } completion:^(BOOL finished) {
                 if (hasVideo) {
@@ -427,7 +415,7 @@
     
     
     [self.itemsSectionPictureArray addObject:image];
-    __weak PictureViewController *wself = self;
+    __weak PictureView *wself = self;
     
     [picker dismissViewControllerAnimated:YES completion:^{
         [UIView animateWithDuration:.25 delay:0 options:7 animations:^{
@@ -452,20 +440,11 @@
 //            }
             
             CGFloat height = 0;
-            if (self.itemsSectionPictureArray.count<3) {
-                height= kScreenWidth/3;
-            } else if (self.itemsSectionPictureArray.count == 3) {
-                height = kScreenWidth/3 *2;
-                
-            } else if (self.itemsSectionPictureArray.count <6) {
-                height= kScreenWidth/3*2;
-            } else if (self.itemsSectionPictureArray.count == 6) {
-                height = kScreenWidth/3*3;
-            }
-            else if (self.itemsSectionPictureArray.count <=9) {
-                height= kScreenWidth/3*3;
-            } else {
-                height= kScreenWidth/3*3;
+            //2016-10-11
+            if (self.itemsSectionPictureArray.count % 3 == 0) {
+                height = (ceilf(self.itemsSectionPictureArray.count/3)+1) * (kScreenWidth/3);
+            }else{
+                height = (ceilf(self.itemsSectionPictureArray.count/3)+1) * ((kScreenWidth/3));
             }
             self.pictureCollectonView.frame = CGRectMake(0, 0, self.frame.size.width, height);
             [wself layoutIfNeeded];
@@ -491,6 +470,3 @@
 
 
 @end
-// 版权属于原作者
-// http://code4app.com (cn) http://code4app.net (en)
-// 发布代码于最专业的源码分享网站: Code4App.com
